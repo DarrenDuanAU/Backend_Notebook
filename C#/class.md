@@ -64,3 +64,42 @@ namespace CsharpIntermediate
   }
 }
 ```
+
+#### initializers
+
+```C#
+using System.Collections.Generic;
+
+namespace CsharpIntermediate
+{
+  public class Person
+  {
+    public int Id;
+    public string FirstName;
+    public string LastName;
+    public DateTime Birthdate;
+  }
+}
+
+//除了我们用Construtor以外，我们有还比较简便的方法，就是用initializer：
+var person = new Person
+                {
+                  FirstName = "Mosh",
+                  LastName = "Hamedani"
+                };
+```
+
+#### Params Modifier
+
+```C#
+public class Calculator
+{
+  public int Add(params int[] numbers){}
+}
+
+var result = calculator.Add(new int[]{1, 2, 3, 4});
+var result = calculator.Add(1, 2, 3, 4);
+//因为使用了params modifier，我们可以使用多个params，不必非要建立一个新的 int[].
+
+```
+
