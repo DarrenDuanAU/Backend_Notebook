@@ -154,25 +154,22 @@ why we need it?
   ```C#
   public class Person
   {
-    private string name;
-    //variable是private的，但是function是public的，我们要控制这个variable被赋值和得到值的方式
-    public void SetName(string name)
+    private DateTime _birthdate;
+
+    public void SetBirthdate(DateTime birthdate)
     {
-      if (!String.IsNullOrEmpty(name))
-      {
-        this._name = name;
-      }
+      _birthdate = birthdate;
     }
-    public string GetName()
+    public DateTime GetBirthdate()
     {
-      return this._name;
+      return _birthdate;
     }
   }
   public void Main(string[] args)
   {
     var person = new Person();
-    person.SetName("Mosh");
-    Console.WriteLine(person.GetName());
+    person.SetBirthdate(new DateTime(1982, 1, 1));
+    Console.WriteLine(person.GetBirthdate());
   }
 
   ```
@@ -180,4 +177,59 @@ why we need it?
 - Polymorphism
 
 
+### Properties
 
+Better way to write the getter and setter function
+```C#
+public class Person
+{
+  private DateTime _birthdate;
+  public DateTime Birthdate
+  {
+    get { return _birthdate; }
+    set { _birthdate = value; }
+    //get和set都是C#的key word
+  }
+}
+```
+Auto-implemented Properties
+```C#
+//因为上面的get和set没有涉及什么逻辑判断，我们可以把他写为下面的形式：
+public class Person
+{
+  private DateTime _birthdate { get; set; }
+}
+```
+
+```C#
+//在这个示例里，为了只能在Person实例化的时候设置birthdate，因此我们把birthdate的set设置为了private，而在constructor中初始化birthdate。
+public class Person
+{
+  public DateTime _birthdate { get; private set; }
+
+  public Person(DateTime birthdate)
+  {
+    Birthdate = birthdate;
+  }
+
+//这里的Age的值是由birthdate计算出来的，而且Age不应该直接设置，所以Age没有set。
+  public int Age
+  {
+    get
+    {
+      var timeSpan = DateTime.Today - Birthdate;
+      var years = timeSpan.Days/365;
+
+      return years;
+    }
+  }
+}
+
+
+public void Main(string[] args)
+{
+  var person = new Person();
+  person.SetBirthdate(new DateTime(1982, 1, 1));
+  Console.WriteLine(person.Age);
+}
+```
