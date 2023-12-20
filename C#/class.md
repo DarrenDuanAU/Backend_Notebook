@@ -1,7 +1,7 @@
 # C-sharp
 
 ## Class
-#### Class Members
+### Class Members
 - Instance: accessible from an object.
 
 ```C#
@@ -13,13 +13,13 @@
   Console.WriteLine();
 ```
 
-#### Why use static members? 
+### Why use static members? 
 - To represent concepts that are singleton.
   - for example: DateTime.Now  (例如：当地时间，这个明显是为一个单例，我们不需要实例化就可以使用)
   - Console.WriteLine()
 
 
-#### Constructors
+### Constructors
 
 ```C#
 using System.Collections.Generic;
@@ -64,8 +64,46 @@ namespace CsharpIntermediate
   }
 }
 ```
+# fields
+如果我们不想要把一个值被突然被重置，我们可以有另外一种写法。
+```C#
+using System.Collections.Generic;
 
-#### initializers
+namespace CsharpIntermediate
+{
+
+  public class Order 
+  {
+  }
+
+  public class Customer
+  {
+    public int Id;
+    public string Name;
+    public readonly List<Order> Orders = new List<Order>();
+    //注意，我们这里使用了readonly，也就是说，不论如何，这个Order的list不会被重新initialize。
+
+    public Customer(int id)
+    {
+      this.Id = id;
+    }
+
+    public Customer(int id, string name) 
+      :this(id)
+    {
+      this.Name = name;
+    }
+
+    public void Promote()
+    {
+      Orders = new List<Order>();
+      //在其他函数就算调用了Promote，依然不会initialize Orders这个variable。
+    }
+  }
+}
+```
+
+### initializers
 
 ```C#
 using System.Collections.Generic;
@@ -88,8 +126,7 @@ var person = new Person
                   LastName = "Hamedani"
                 };
 ```
-
-#### Params Modifier
+### Params Modifier
 
 ```C#
 public class Calculator
@@ -102,4 +139,45 @@ var result = calculator.Add(1, 2, 3, 4);
 //因为使用了params modifier，我们可以使用多个params，不必非要建立一个新的 int[].
 
 ```
+
+### Access Modifiers
+- Public
+- Private
+- Protected
+- Internal
+- Protected Internal
+
+why we need it?
+- Encapsulation/ Information Hiding
+  - Define fields as private
+  - Provide getter/setter methods as public
+  ```C#
+  public class Person
+  {
+    private string name;
+    //variable是private的，但是function是public的，我们要控制这个variable被赋值和得到值的方式
+    public void SetName(string name)
+    {
+      if (!String.IsNullOrEmpty(name))
+      {
+        this._name = name;
+      }
+    }
+    public string GetName()
+    {
+      return this._name;
+    }
+  }
+  public void Main(string[] args)
+  {
+    var person = new Person();
+    person.SetName("Mosh");
+    Console.WriteLine(person.GetName());
+  }
+
+  ```
+- Inheritance
+- Polymorphism
+
+
 
