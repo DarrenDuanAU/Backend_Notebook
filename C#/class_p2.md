@@ -89,5 +89,10 @@ namespace Composition
 
 ### 课后笔记
 实际上Inheritance和Composition都可以实现类似的功能，但是Composition可以让代码更加的loose-coupling，也就是各个class之间减少了相互依赖（可以做到0依赖），让代码更加可维护。尽管Inheritance更容易理解，Composition的方式可能是更好的一种approach。
-![alt text](https://github.com/DarrenDuanAU/big-brain/blob/main/demo-images/signin-demo.png)
-![alt text](https://github.com/DarrenDuanAU/big-brain/blob/main/demo-images/signin-demo.png)
+
+假设我们要创造一个人和一个狗的object，后来我们又添加了walk这种方法，最后我们添加了goldfish这种object，如果用Inheritance就容易造成问题。
+Inheritance的图示：
+![alt text](https://github.com/DarrenDuanAU/Backend_Notebook/blob/main/C%23/images/Inheritance.png)
+Composition可以把walk，swim都当作一个组件（特征），在新的object中实例化，这样我们就可以避免很多问题，让代码更加容易维护：
+Composition的图示：
+![alt text](https://github.com/DarrenDuanAU/Backend_Notebook/blob/main/C%23/images/Composition.png)
