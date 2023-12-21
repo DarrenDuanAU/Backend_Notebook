@@ -1,6 +1,6 @@
 # C-sharp
 
-## Class
+## Class Part 1
 ### Class Members
 - Instance: accessible from an object.
 
@@ -165,11 +165,16 @@ why we need it?
       return _birthdate;
     }
   }
-  public void Main(string[] args)
+
+
+  class program
   {
-    var person = new Person();
-    person.SetBirthdate(new DateTime(1982, 1, 1));
-    Console.WriteLine(person.GetBirthdate());
+    static void Main(string[] args)
+    {
+      var person = new Person();
+      person.SetBirthdate(new DateTime(1982, 1, 1));
+      Console.WriteLine(person.GetBirthdate());
+    }
   }
 
   ```
@@ -209,7 +214,7 @@ public class Person
 
   public Person(DateTime birthdate)
   {
-    Birthdate = birthdate;
+    this._birthdate = birthdate;
   }
 
 //这里的Age的值是由birthdate计算出来的，而且Age不应该直接设置，所以Age没有set。
@@ -225,7 +230,6 @@ public class Person
   }
 }
 
-
 public void Main(string[] args)
 {
   var person = new Person();
@@ -233,3 +237,31 @@ public void Main(string[] args)
   Console.WriteLine(person.Age);
 }
 ```
+
+
+### 课后笔记
+在C#中，public string name； 和 public string name { set; get; } 有什么区别？为什么我需要set 和get来操作name？
+
+- public string name;：
+这是一个公共字段（Field），直接访问和修改。外部代码可以直接通过对象的实例来访问或修改name字段的值。这样的字段在面向对象编程中被认为是违反封装性原则的，因为它们可以在外部被直接访问，导致代码的脆弱性。
+
+```C#
+MyClass obj = new MyClass();
+obj.name = "John"; // 直接访问字段
+```
+
+- public string name { get; set; }：
+
+这是一个属性（Property），使用了自动实现的属性，它隐藏了字段的具体实现。属性提供了一种更加控制访问的方式，允许你在读取或设置属性值时执行逻辑。在这种情况下，C# 自动为你创建了一个私有字段，并提供了公共的 get 和 set 方法，使你能够通过属性来访问和修改字段的值。
+
+```C#
+MyClass obj = new MyClass();
+obj.name = "John"; // 使用属性，实际调用 set 方法
+Console.WriteLine(obj.name); // 使用属性，实际调用 get 方法
+```
+为什么需要使用属性而不是公共字段：
+
+封装性： 属性允许你隐藏底层实现，控制对字段的访问。
+验证和逻辑： 你可以在属性的 set 方法中添加验证逻辑，确保设置的值符合要求。
+适应未来变化： 如果后续需要更改属性的实现，你可以在不更改类外部使用该属性的代码的情况下进行修改。
+总的来说，使用属性提供了更好的封装性和控制，使你能够在需要时执行逻辑。在很多情况下，使用属性而不是直接暴露字段是一种良好的编程实践。
