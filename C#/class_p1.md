@@ -64,7 +64,7 @@ namespace CsharpIntermediate
   }
 }
 ```
-# fields
+### fields
 如果我们不想要把一个值被突然被重置，我们可以有另外一种写法。
 ```C#
 using System.Collections.Generic;
