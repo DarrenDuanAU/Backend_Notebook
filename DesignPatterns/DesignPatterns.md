@@ -1,4 +1,4 @@
-## OOP 
+## Object-oriented programming (OOP)
  
 面向对象编程
 The four principles of Object-oriented programming (OOP): 
