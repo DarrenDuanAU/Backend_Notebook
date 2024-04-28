@@ -2,18 +2,24 @@
 
 ## Class Part 1
 ### Class Members
+
+有2种形式class，一种是Instance，这种情况下，需要class实例化后才能access object。第二种是static，这种情况下，我们直接调用class就能access function。
+
 - Instance: accessible from an object.
+- Static: accessible from the class.
 
 ```C#
+//Instance
   Person person = new Person();
   person.Introduce();
 ```
 
 ```C#
+//Static
   Console.WriteLine();
 ```
 
-### Why use static members? 
+#### Why use static members? 
 - To represent concepts that are singleton.
   - for example: DateTime.Now  (例如：当地时间，这个明显是为一个单例，我们不需要实例化就可以使用)
   - Console.WriteLine()
@@ -81,7 +87,7 @@ namespace CsharpIntermediate
     public int Id;
     public string Name;
     public readonly List<Order> Orders = new List<Order>();
-    //注意，我们这里使用了readonly，也就是说，不论如何，这个Order的list不会被重新initialize。
+    //注意，我们这里使用了readonly，也就是说，不论如何，这个Order的list不会被重新initialize，在.net中，readonly的variable只能在declaration和constrictor中进行赋值，之后就不能在给他赋值了。
 
     public Customer(int id)
     {
