@@ -10,13 +10,13 @@
 
 ```C#
 //Instance
-  Person person = new Person();
-  person.Introduce();
+Person person = new Person();
+person.Introduce();
 ```
 
 ```C#
 //Static
-  Console.WriteLine();
+Console.WriteLine();
 ```
 
 #### Why use static members? 
@@ -33,41 +33,41 @@ using System.Collections.Generic;
 namespace CsharpIntermediate
 {
 
-  public class Order 
-  {
-  }
-
-  public class Customer
-  {
-    public int Id;
-    public string Name;
-    public List<Order> Orders;
-
-    public Customer()
+    public class Order 
     {
-      Order = new List<Order>();
-      // 我们需要在constructor内先给Order创建一个instance（不然无法对Orders进行操作），而Id和Name是有默认值的，因为Id为int，Id的默认值是0，Name是string，Name的默认值是null。
     }
 
-    // 这里我们用了“:this()”, this是指该Class，所以this()指的是Customer()这个无参数的构造函数。所以在运行Customer(int id)前会先运行，Customer()。下面的Customer(int id, string name) 也是一样。
-    public Customer(int id)
-      :this() 
+    public class Customer
     {
-      this.Id = id;
-    }
+        public int Id;
+        public string Name;
+        public List<Order> Orders;
 
-    //我们现在有3个构造函数：
-    //public Customer() 
-    //public Customer(int id)
-    //public Customer(int id, string name) 
-    //在初始化时，我们可以按三种情况构造这个Customer
-    public Customer(int id, string name) 
-      :this()
-    {
-      this.Id = id;
-      this.Name = name;
+        public Customer()
+        {
+            this.Orders = new List<Order>();
+            // 我们需要在constructor内先给Order创建一个instance（不然无法对Orders进行操作），而Id和Name是有默认值的，因为Id为int，Id的默认值是0，Name是string，Name的默认值是null。
+        }
+
+        // 这里我们用了“:this()”, this是指该Class，所以this()指的是Customer()这个无参数的构造函数。所以在运行Customer(int id)前会先运行，Customer()。下面的Customer(int id, string name) 也是一样。
+        public Customer(int id)
+            :this() 
+        {
+            this.Id = id;
+        }
+
+        //我们现在有3个构造函数：
+        //public Customer() 
+        //public Customer(int id)
+        //public Customer(int id, string name) 
+        //在初始化时，我们可以按三种情况构造这个Customer
+        public Customer(int id, string name) 
+            :this()
+        {
+            this.Id = id;
+            this.Name = name;
+        }
     }
-  }
 }
 ```
 ### fields
@@ -78,54 +78,65 @@ using System.Collections.Generic;
 namespace CsharpIntermediate
 {
 
-  public class Order 
-  {
-  }
-
-  public class Customer
-  {
-    public int Id;
-    public string Name;
-    public readonly List<Order> Orders = new List<Order>();
-    //注意，我们这里使用了readonly，也就是说，不论如何，这个Order的list不会被重新initialize，在.net中，readonly的variable只能在declaration和constrictor中进行赋值，之后就不能在给他赋值了。
-
-    public Customer(int id)
+    public class Order 
     {
-      this.Id = id;
     }
 
-    public Customer(int id, string name) 
-      :this(id)
+    public class Customer
     {
-      this.Name = name;
-    }
+        public int Id;
+        public string Name;
+        public readonly List<Order> Orders = new List<Order>();
+        //readonly：注意，我们这里使用了readonly，也就是说，不论如何，这个Order的list不会被重新initialize，在.net中，readonly的variable只能在declaration和constrictor中进行赋值，之后就不能在给他赋值了。
+        //= new List<Order>()： 这里我们直接initialize了 Orders，和上一种写法（在Costomer的构造函数中定义）效果一样。
 
-    public void Promote()
-    {
-      Orders = new List<Order>();
-      //在其他函数就算调用了Promote，依然不会initialize Orders这个variable。
+        public Customer(int id)
+        {
+            this.Id = id;
+        }
+
+        public Customer(int id, string name) 
+            :this(id)
+        {
+            this.Name = name;
+        }
+
+        public void Promote()
+        {
+            Orders = new List<Order>();
+            //在其他函数就算调用了Promote，依然不会initialize Orders这个variable。
+        }
     }
-  }
 }
 ```
 
 ### initializers
 
 ```C#
+
 using System.Collections.Generic;
 
 namespace CsharpIntermediate
 {
-  public class Person
-  {
-    public int Id;
-    public string FirstName;
-    public string LastName;
-    public DateTime Birthdate;
-  }
+    public class Person
+    {
+        public int Id;
+        public string firstName;
+        public string lastName;
+        public DateTime birthdate;
+
+        // public Person(int id) {}
+        // public Person(int id, string frirstName) {}
+        // public Person(int id, string firstName, string lastName) {}
+        // public Person(int id, DateTime birthdate) {}
+
+        //initializers主要解决的问题是，当我们的parameter太多的时候，我们可以需要很多种类型的constructor。
+    }
 }
 
-//除了我们用Construtor以外，我们有还比较简便的方法，就是用initializer：
+
+
+//为了解决这个问题，我们可以用initializer，这样我们就不需要那么多的constructor了，我们只在需要的时候设置constructor：
 var person = new Person
                 {
                   FirstName = "Mosh",
@@ -137,7 +148,7 @@ var person = new Person
 ```C#
 public class Calculator
 {
-  public int Add(params int[] numbers){}
+    public int Add(params int[] numbers){}
 }
 
 var result = calculator.Add(new int[]{1, 2, 3, 4});
@@ -157,33 +168,33 @@ why we need it?
 - Encapsulation/ Information Hiding
   - Define fields as private
   - Provide getter/setter methods as public
-  ```C#
-  public class Person
-  {
+```C#
+public class Person
+{
     private DateTime _birthdate;
 
     public void SetBirthdate(DateTime birthdate)
     {
-      _birthdate = birthdate;
+        _birthdate = birthdate;
     }
     public DateTime GetBirthdate()
     {
-      return _birthdate;
+        return _birthdate;
     }
-  }
+}
 
 
-  class program
-  {
+class program
+{
     static void Main(string[] args)
     {
-      var person = new Person();
-      person.SetBirthdate(new DateTime(1982, 1, 1));
-      Console.WriteLine(person.GetBirthdate());
+        var person = new Person();
+        person.SetBirthdate(new DateTime(1982, 1, 1));
+        Console.WriteLine(person.GetBirthdate());
     }
-  }
+}
 
-  ```
+```
 - Inheritance
 - Polymorphism
 
@@ -194,13 +205,13 @@ Better way to write the getter and setter function
 ```C#
 public class Person
 {
-  private DateTime _birthdate;
-  public DateTime Birthdate
-  {
-    get { return _birthdate; }
-    set { _birthdate = value; }
-    //get和set都是C#的key word
-  }
+    private DateTime _birthdate;
+    public DateTime Birthdate
+    {
+        get { return _birthdate; }
+        set { _birthdate = value; }
+        //get和set都是C#的key word
+    }
 }
 ```
 Auto-implemented Properties
@@ -208,7 +219,7 @@ Auto-implemented Properties
 //因为上面的get和set没有涉及什么逻辑判断，我们可以把他写为下面的形式：
 public class Person
 {
-  private DateTime _birthdate { get; set; }
+    private DateTime _birthdate { get; set; }
 }
 ```
 
@@ -216,31 +227,31 @@ public class Person
 //在这个示例里，为了只能在Person实例化的时候设置birthdate，因此我们把birthdate的set设置为了private，而在constructor中初始化birthdate。
 public class Person
 {
-  public DateTime _birthdate { get; private set; }
+    public DateTime _birthdate { get; private set; }
 
-  public Person(DateTime birthdate)
-  {
-    this._birthdate = birthdate;
-  }
-
-//这里的Age的值是由birthdate计算出来的，而且Age不应该直接设置，所以Age没有set。
-  public int Age
-  {
-    get
+    public Person(DateTime birthdate)
     {
-      var timeSpan = DateTime.Today - Birthdate;
-      var years = timeSpan.Days/365;
-
-      return years;
+        this._birthdate = birthdate;
     }
-  }
+
+    //这里的Age的值是由birthdate计算出来的，而且Age不应该直接设置，所以Age没有set。
+    public int Age
+    {
+        get
+        {
+            var timeSpan = DateTime.Today - Birthdate;
+            var years = timeSpan.Days/365;
+
+            return years;
+        }
+    }
 }
 
 public void Main(string[] args)
 {
-  var person = new Person();
-  person.SetBirthdate(new DateTime(1982, 1, 1));
-  Console.WriteLine(person.Age);
+    var person = new Person();
+    person.SetBirthdate(new DateTime(1982, 1, 1));
+    Console.WriteLine(person.Age);
 }
 ```
 
