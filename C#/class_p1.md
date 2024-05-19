@@ -169,14 +169,20 @@ why we need it?
   - Define fields as private
   - Provide getter/setter methods as public
 ```C#
+// class是public的
 public class Person
 {
+    // 但是这个值是 private的，一般来说，private的值会以‘_’开头，并且首字母会小写。
     private DateTime _birthdate;
+    //这里的_birthdate是private的，没有人可以在class外部直接访问这个值。但是我们用setter和getter让外部可以间接访问这个值（当然需要我们通过getter和setter的逻辑来进行处理）。
 
+    // setter
     public void SetBirthdate(DateTime birthdate)
     {
         _birthdate = birthdate;
     }
+
+    // getter
     public DateTime GetBirthdate()
     {
         return _birthdate;
